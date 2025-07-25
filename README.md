@@ -1,1 +1,1 @@
-# bodega-users
+# bodega-users this is our app home screen and category screen
