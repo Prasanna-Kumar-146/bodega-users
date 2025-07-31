@@ -14,65 +14,83 @@ class _LoginScreenState extends State<LoginScreen> {
   final mobileController = TextEditingController();
 
   void loginWithMobile() {
-    if (!isValidPhone(mobileController.text)) {
+    final mobile = mobileController.text.trim();
+
+    if (!isValidPhone(mobile)) {
       showSnackBar(context, "Please enter a valid mobile number");
       return;
     }
 
-    // Optional: Show confirmation
-    showSnackBar(context, "Login requested for ${mobileController.text}");
+    showSnackBar(context, "Login requested for $mobile");
 
-    // ✅ Redirect to the next screen
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const NextScreen()),
     );
   }
 
+  void goToSignup() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const SignUpScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Login",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            SizedBox(height: 8),
-            Text(
-              "Enter your mobile number",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Colors.grey[700],
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 32),
             CustomTextField(
-              label: "Mobile Number",
               controller: mobileController,
+              label: "Mobile Number", // ✅ Added label
+              hintText: "Enter mobile number",
               keyboardType: TextInputType.phone,
-              prefixText: "+91 ",
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             RoundedButton(
               title: "Login",
               onPressed: loginWithMobile,
-              backgroundColor: Colors.blueAccent,
-              textColor: Colors.white,
+              backgroundColor: Colors.blue,
+              textColor: Colors.white, // ✅ Added textColor
             ),
-            Spacer(),
-            Text(
-              "By continuing, you agree to our Terms of Service and Privacy Policy.",
-              style: TextStyle(fontSize: 12, color: Colors.grey),
-              textAlign: TextAlign.center,
+            const SizedBox(height: 12),
+            RoundedButton(
+              title: "Signup",
+              onPressed: goToSignup,
+              backgroundColor: Colors.green,
+              textColor: Colors.white, // ✅ Added textColor
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// Optional placeholder screen
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Signup")),
+      body: const Center(
+        child: Text("Signup screen content goes here"),
       ),
     );
   }
