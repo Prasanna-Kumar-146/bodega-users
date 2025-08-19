@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
 
-void main() => runApp(LoginApp());
+void main() => runApp(const MyApp());
 
-class LoginApp extends StatelessWidget {
-  const LoginApp({Key? key}) : super(key: key); // Added Key constructor
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login',
-      home: LoginScreen(), // Use LoginScreen as your home screen
-      debugShowCheckedModeBanner: false, // Optional: hide debug banner
+      title: 'Bodega',
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {'/': (context) => const LoginScreen()},
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'Succes.dart';
+import 'dashboard/vendor_dashboard_screen.dart'; // Updated import
 
 class OTPScreen extends StatefulWidget {
   final String mobileNumber;
@@ -19,7 +19,9 @@ class _OTPScreenState extends State<OTPScreen> {
 
   String maskedMobile() {
     if (widget.mobileNumber.length >= 4) {
-      final visible = widget.mobileNumber.substring(widget.mobileNumber.length - 4);
+      final visible = widget.mobileNumber.substring(
+        widget.mobileNumber.length - 4,
+      );
       return 'XXXXXXXX$visible';
     }
     return widget.mobileNumber;
@@ -54,9 +56,11 @@ class _OTPScreenState extends State<OTPScreen> {
     final otp = otpControllers.map((c) => c.text.trim()).join();
     const mockValidOTP = "123456";
     if (otp == mockValidOTP) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const SuccessScreen()),
+        MaterialPageRoute(
+          builder: (context) => const VendorDashboardScreen(),
+        ), // Updated navigation
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -91,7 +95,9 @@ class _OTPScreenState extends State<OTPScreen> {
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: isWide ? 500 : double.infinity),
+              constraints: BoxConstraints(
+                maxWidth: isWide ? 500 : double.infinity,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -135,9 +141,12 @@ class _OTPScreenState extends State<OTPScreen> {
                             fontSize: 18,
                             fontFamily: 'Montserrat',
                           ),
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           onChanged: (value) {
-                            if (value.isNotEmpty && index < otpControllers.length - 1) {
+                            if (value.isNotEmpty &&
+                                index < otpControllers.length - 1) {
                               FocusScope.of(context).nextFocus();
                             } else if (value.isEmpty && index > 0) {
                               FocusScope.of(context).previousFocus();
@@ -179,21 +188,21 @@ class _OTPScreenState extends State<OTPScreen> {
                   ),
                   TextButton(
                     onPressed: isResendEnabled ? resendOTP : null,
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                    ),
+                    style: TextButton.styleFrom(padding: EdgeInsets.zero),
                     child: Text(
                       "Resend Again",
                       style: TextStyle(
                         fontFamily: 'Arial',
                         fontSize: 12,
-                        color: isResendEnabled ? const Color(0xFF6A1B9A) : Colors.grey,
+                        color: isResendEnabled
+                            ? const Color(0xFF6A1B9A)
+                            : Colors.grey,
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Request new code in 00:30 ${countdown.toString().padLeft(2, '0')}s",
+                    "Request new code in 00: ${countdown.toString().padLeft(2, '0')}s",
                     style: const TextStyle(
                       fontSize: 12,
                       fontFamily: 'Arial',

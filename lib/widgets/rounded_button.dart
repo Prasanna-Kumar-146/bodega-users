@@ -46,13 +46,13 @@ class RoundedButton extends StatelessWidget {
           child: icon == null
               ? Text(title, style: textStyle)
               : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: textColor, size: iconSize),
-              const SizedBox(width: 8),
-              Text(title, style: textStyle),
-            ],
-          ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(icon, color: textColor, size: iconSize),
+                    const SizedBox(width: 8),
+                    Text(title, style: textStyle),
+                  ],
+                ),
         ),
       ),
     );

@@ -10,7 +10,8 @@ class CustomTextField extends StatelessWidget {
     required this.label,
     required this.controller,
     this.keyboardType = TextInputType.phone,
-    this.prefixText, required String hintText,
+    this.prefixText,
+    required String hintText,
   });
 
   @override
@@ -21,9 +22,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         prefixText: prefixText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
       style: TextStyle(fontSize: 16),

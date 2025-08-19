@@ -9,21 +9,43 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('Login')),
+    body: const Center(child: Text('Login Screen Placeholder')),
+  );
+}
+
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController mobileController = TextEditingController();
 
+  bool isValidPhone(String phone) {
+    final pattern = RegExp(r'^[6-9]\d{9}$');
+    return pattern.hasMatch(phone.trim());
+  }
+
   void sendOTP() {
     final mobile = mobileController.text.trim();
-    if (mobile.isNotEmpty) {
+
+    if (mobile.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter your mobile number")),
+      );
+    } else if (!isValidPhone(mobile)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Enter a valid 10-digit mobile number starting with 6-9",
+          ),
+        ),
+      );
+    } else {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => OTPScreen(mobileNumber: mobile),
         ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter your mobile number")),
       );
     }
   }
@@ -31,9 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void goToSignup() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const SignupScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => const SignupScreen()),
     );
   }
 
@@ -46,9 +66,14 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 24.0,
+            ),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: isWide ? 500 : double.infinity),
+              constraints: BoxConstraints(
+                maxWidth: isWide ? 500 : double.infinity,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -89,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         contentPadding: EdgeInsets.all(16),
                       ),
                       keyboardType: TextInputType.phone,
+                      maxLength: 10,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -118,7 +144,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextSpan(
                             text: "Sign up?",
-                            style: TextStyle(color: Color(0xff6C63FF), fontSize: 16),
+                            style: TextStyle(
+                              color: Color(0xff6C63FF),
+                              fontSize: 16,
+                            ),
                           ),
                         ],
                       ),
