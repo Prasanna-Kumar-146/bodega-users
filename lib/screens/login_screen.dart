@@ -9,14 +9,6 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(title: const Text('Login')),
-    body: const Center(child: Text('Login Screen Placeholder')),
-  );
-}
-
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController mobileController = TextEditingController();
 
@@ -35,9 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else if (!isValidPhone(mobile)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(
-            "Enter a valid 10-digit mobile number starting with 6-9",
-          ),
+          content: Text("Enter a valid 10-digit mobile number starting with 6-9"),
         ),
       );
     } else {
@@ -66,14 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 24.0,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
             child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: isWide ? 500 : double.infinity,
-              ),
+              constraints: BoxConstraints(maxWidth: isWide ? 500 : double.infinity),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -93,29 +78,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                   const SizedBox(height: 32),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withAlpha(25),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
+                  TextField(
+                    controller: mobileController,
+                    decoration: const InputDecoration(
+                      labelText: "Mobile Number",
+                      hintText: "Enter your 10-digit number",
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(16),
+                      counterText: "", // hides character count
                     ),
-                    child: TextField(
-                      controller: mobileController,
-                      decoration: const InputDecoration(
-                        labelText: "Mobile Number",
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.all(16),
-                      ),
-                      keyboardType: TextInputType.phone,
-                      maxLength: 10,
-                    ),
+                    keyboardType: TextInputType.phone,
+                    maxLength: 10,
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
@@ -133,34 +106,28 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: goToSignup,
-                    child: const Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "New User? ",
-                            style: TextStyle(color: Colors.black, fontSize: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("New User? ", style: TextStyle(fontSize: 16)),
+                      GestureDetector(
+                        onTap: goToSignup,
+                        child: const Text(
+                          "Sign up",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff6C63FF),
+                            fontWeight: FontWeight.w600,
                           ),
-                          TextSpan(
-                            text: "Sign up?",
-                            style: TextStyle(
-                              color: Color(0xff6C63FF),
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 34.0),
-                    child: Text(
-                      "By continuing, you agree to our Terms of Service and Privacy Policy",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: Color(0xFF544F94)),
-                    ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    "By continuing, you agree to our Terms of Service and Privacy Policy",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14, color: Color(0xFF544F94)),
                   ),
                 ],
               ),

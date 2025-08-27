@@ -13,126 +13,120 @@ class VendorDashboardScreen extends StatefulWidget {
 }
 
 class _VendorDashboardScreenState extends State<VendorDashboardScreen> {
-  int _currentIndex = 3; // Default to Vendors screen as per the screenshot
+  int _currentIndex = 3; // Default to Vendors screen
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const ProductsScreen(),
-    const VoiceAssistantScreen(),
-    const VendorsScreen(),
-    const CartScreen(),
+  final List<Widget> _screens = const [
+    HomeScreen(),
+    ProductsScreen(),
+    VoiceAssistantScreen(),
+    VendorsScreen(),
+    CartScreen(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        leading: Container(
-          width: 30,
-          height: 30,
-          margin: const EdgeInsets.only(top: 24, left: 15),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xFF544F94),
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 24,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 80,
+        flexibleSpace: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFF544F94),
+                  ),
+                  child: const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ),
+                const Expanded(
+                  child: Text(
+                    'Bodega',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 40),
+              ],
             ),
           ),
         ),
-        title: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 24),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Bodega',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: 75, left: 15),
-              child: SizedBox(
-                width: 290,
-                height: 39,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search for products',
-                    hintStyle: const TextStyle(color: Color(0xFF544F94)),
-                    prefixIcon: const Icon(Icons.search, color: Color(0xFF544F94)),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6.5),
-                      borderSide: BorderSide.none,
-                    ),
-                    fillColor: Colors.grey[200],
-                    filled: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 12.0,
-                    ),
-                  ),
-                ),
-              ),
+      ),
+      body: _screens[_currentIndex],
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x1A000000),
+              blurRadius: 8,
+              offset: Offset(0, -2),
             ),
           ],
         ),
-        centerTitle: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        titleSpacing: 0,
-      ),
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF6A1B9A), // Purple color from image
-        unselectedItemColor: const Color(0xFF757575), // Grey color from image
-        backgroundColor: Colors.white,
-        elevation: 8.0, // Slight elevation for shadow effect
-        selectedLabelStyle: const TextStyle(fontSize: 12),
-        unselectedLabelStyle: const TextStyle(fontSize: 12),
-        items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home, size: 24, color: Color(0xFF544F94)),
-          activeIcon: Icon(Icons.home, size: 24, color: Colors.black),
-          label: 'Home',
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: const Color(0xFF6B7280),
+          selectedLabelStyle: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined, size: 24),
+              activeIcon: Icon(Icons.home, size: 24),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_rounded, size: 24),
+              activeIcon: Icon(Icons.list_rounded, size: 24),
+              label: 'Products',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.graphic_eq, size: 24),
+              activeIcon: Icon(Icons.graphic_eq, size: 24),
+              label: 'Assistant',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.store_outlined, size: 24),
+              activeIcon: Icon(Icons.store, size: 24),
+              label: 'Vendors',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart_outlined, size: 24),
+              activeIcon: Icon(Icons.shopping_cart, size: 24),
+              label: 'Cart',
+            ),
+          ],
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.list, size: 24, color: Color(0xFF544F94)), // Default color
-          activeIcon: Icon(Icons.list, size: 24, color: Colors.black), // Active color
-          label: 'Products',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.multitrack_audio, size: 24, color: Color(0xFF544F94)),
-          activeIcon: Icon(Icons.multitrack_audio, size: 24, color: Colors.black),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.store, size: 24, color: Color(0xFF544F94)),
-          activeIcon: Icon(Icons.store, size: 24, color: Colors.black),
-          label: 'Vendors',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart, size: 24, color: Color(0xFF544F94)), // Default color
-          activeIcon: Icon(Icons.shopping_cart, size: 24, color: Colors.black), // Active color
-          label: 'Cart',
-        ),
-        ],
       ),
     );
   }
