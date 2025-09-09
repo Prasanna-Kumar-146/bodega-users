@@ -72,128 +72,161 @@ class _LocationScreenState extends State<LocationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: isWide ? 500 : double.infinity),
-              child: Column(
-                children: [
-                  // Top Row: Profile + Title
-                  Row(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: isWide ? 600 : double.infinity),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 30.0,
-                        height: 30.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(56.0),
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        'Bodega',
-                        style: PlusJakartaSansStyle.getStyle(
-                          weight: 700,
-                          fontSize: 18.0,
-                          color: Colors.black,
-                          uniquifier: 'header',
-                        ),
-                      ),
-                      const Spacer(flex: 2),
-                    ],
-                  ),
-                  const SizedBox(height: 24.0),
-
-                  // Map + Address
-                  Container(
-                    height: 400.0,
-                    child: Stack(
-                      children: [
-                        GoogleMap(
-                          onMapCreated: _onMapCreated,
-                          initialCameraPosition: CameraPosition(
-                            target: _selectedLocation,
-                            zoom: 14.0,
-                          ),
-                          onTap: _updateMarker,
-                          markers: _marker != null ? {_marker!} : {},
-                          onCameraMove: (position) {
-                            _updateMarker(position.target);
-                          },
-                        ),
-                        Positioned(
-                          top: 10.0,
-                          left: 10.0,
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            color: Colors.white.withOpacity(0.8),
-                            child: Text(
-                              _address,
-                              style: PlusJakartaSansStyle.getStyle(
-                                weight: 400,
-                                fontSize: 14.0,
+                      // Top Row: Tappable Profile Icon + Bodega Title
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/profile');
+                            },
+                            child: Container(
+                              width: 30.0,
+                              height: 30.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(56.0),
                                 color: const Color(0xFF544F94),
-                                uniquifier: 'address',
+                              ),
+                              child: const Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 20,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 24.0),
+                          const Spacer(),
+                          Text(
+                            'Bodega',
+                            style: PlusJakartaSansStyle.getStyle(
+                              weight: 700,
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              uniquifier: 'header',
+                            ),
+                          ),
+                          const Spacer(flex: 2),
+                        ],
+                      ),
+                      const SizedBox(height: 24.0),
 
-                  // Buttons
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFDFE0E2),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(9.62),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16.03),
-                        ),
-                        child: Text(
-                          'Back',
-                          style: PlusJakartaSansStyle.getStyle(
-                            weight: 700,
-                            fontSize: 16.0,
-                            color: Colors.black,
-                            uniquifier: 'button',
-                          ),
+                      // Map + Address
+                      Container(
+                        height: 400.0,
+                        child: Stack(
+                          children: [
+                            GoogleMap(
+                              onMapCreated: _onMapCreated,
+                              initialCameraPosition: CameraPosition(
+                                target: _selectedLocation,
+                                zoom: 14.0,
+                              ),
+                              onTap: _updateMarker,
+                              markers: _marker != null ? {_marker!} : {},
+                              onCameraMove: (position) {
+                                _updateMarker(position.target);
+                              },
+                            ),
+                            _address == 'Address not found'
+                                ? Center(
+                              child: Container(
+                                padding: const EdgeInsets.all(12.0),
+                                color: Colors.white.withOpacity(0.85),
+                                child: Text(
+                                  _address,
+                                  textAlign: TextAlign.center,
+                                  style: PlusJakartaSansStyle.getStyle(
+                                    weight: 700,
+                                    fontSize: 16.0,
+                                    color: const Color(0xFF544F94),
+                                    uniquifier: 'address-not-found',
+                                  ),
+                                ),
+                              ),
+                            )
+                                : Positioned(
+                              top: 10.0,
+                              left: 10.0,
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                color: Colors.white.withOpacity(0.8),
+                                child: Text(
+                                  _address,
+                                  style: PlusJakartaSansStyle.getStyle(
+                                    weight: 400,
+                                    fontSize: 14.0,
+                                    color: const Color(0xFF544F94),
+                                    uniquifier: 'address',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(width: 16.0),
-                      ElevatedButton(
-                        onPressed: _saveLocation,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF221662),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(9.62),
+                      const SizedBox(height: 24.0),
+
+                      // Buttons
+                      Wrap(
+                        spacing: 16.0,
+                        runSpacing: 12.0,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFDFE0E2),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(9.62),
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.03),
+                            ),
+                            child: Text(
+                              'Back',
+                              style: PlusJakartaSansStyle.getStyle(
+                                weight: 700,
+                                fontSize: 16.0,
+                                color: Colors.black,
+                                uniquifier: 'button',
+                              ),
+                            ),
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 16.03),
-                        ),
-                        child: Text(
-                          'Save',
-                          style: PlusJakartaSansStyle.getStyle(
-                            weight: 700,
-                            fontSize: 16.0,
-                            color: Colors.white,
-                            uniquifier: 'button',
+                          ElevatedButton(
+                            onPressed: _saveLocation,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF221662),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(9.62),
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 16.03),
+                            ),
+                            child: Text(
+                              'Save',
+                              style: PlusJakartaSansStyle.getStyle(
+                                weight: 700,
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                uniquifier: 'button',
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

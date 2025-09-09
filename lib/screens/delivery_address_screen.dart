@@ -22,7 +22,7 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0), // ✅ Updated padding
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
             child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: isWide ? 500 : double.infinity),
               child: Form(
@@ -30,16 +30,42 @@ class _DeliveryAddressScreenState extends State<DeliveryAddressScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'Delivery Address',
-                      style: PlusJakartaSansStyle.getStyle(
-                        weight: 700,
-                        fontSize: 18.0,
-                        color: Colors.black,
-                        uniquifier: 'header',
-                      ),
+                    // ✅ Profile Icon + Title Row
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/profile');
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(0xFF544F94),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Text(
+                          'Delivery Address',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const Spacer(flex: 2),
+                      ],
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 24.0),
 
                     // Address Fields
                     ..._buildTextFields(),

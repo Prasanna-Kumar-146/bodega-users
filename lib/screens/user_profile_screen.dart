@@ -44,15 +44,25 @@ class UserProfileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Profile Icon + Bodega Text
+                  // ✅ Tappable Profile Icon + Bodega Text
                   Row(
                     children: [
-                      Container(
-                        width: 30.0,
-                        height: 30.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(56.0),
-                          color: Colors.grey,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
+                        child: Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(56.0),
+                            color: const Color(0xFF544F94),
+                          ),
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ),
                       const Spacer(),
@@ -82,29 +92,29 @@ class UserProfileScreen extends StatelessWidget {
 
                   // Options
                   buildOption(context, 'Account Overview', () {
-                    // Future implementation
+                    debugPrint("Tapped: Account Overview");
                   }),
                   buildOption(context, 'Delivery Address', () {
                     Navigator.pushNamed(context, '/delivery_address_main');
                   }),
                   buildOption(context, 'Order History & Reorders', () {
-                    // Future implementation
+                    debugPrint("Tapped: Order History");
                   }),
                   buildOption(context, 'Wallet & Payments', () {
-                    // Future implementation
+                    debugPrint("Tapped: Wallet & Payments");
                   }),
                   buildOption(context, 'Support & Help', () {
-                    // Future implementation
+                    debugPrint("Tapped: Support & Help");
                   }),
                   buildOption(context, 'Personal Preferences', () {
-                    // Future implementation
+                    debugPrint("Tapped: Personal Preferences");
                   }),
                   const SizedBox(height: 32),
 
                   // Back Button to Vendor Page
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/vendor'); // ✅ Explicit navigation
+                      Navigator.pushReplacementNamed(context, '/vendor');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF221662),

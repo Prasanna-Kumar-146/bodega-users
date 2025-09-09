@@ -18,15 +18,25 @@ class DeliveryAddressMainScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Top Row: Profile Icon + Bodega Title
+                  // ✅ Top Row: Tappable Profile Icon + Bodega Title
                   Row(
                     children: [
-                      Container(
-                        width: 30.0,
-                        height: 30.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(56.0),
-                          color: Colors.grey,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
+                        child: Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(56.0),
+                            color: const Color(0xFF544F94),
+                          ),
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ),
                       const Spacer(),
@@ -86,7 +96,7 @@ class DeliveryAddressMainScreen extends StatelessWidget {
                       'Back',
                       textAlign: TextAlign.center,
                       style: PlusJakartaSansStyle.getStyle(
-                        weight: 700,
+                        weight: 800,
                         uniquifier: 'button',
                         fontSize: 12.83,
                         color: const Color(0xFFFFFFFF),
